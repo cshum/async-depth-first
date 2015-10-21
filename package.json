@@ -1,0 +1,21 @@
+{
+  "name": "async-depth-first",
+  "version": "0.0.1",
+  "description": "Depth first traversal for recursive async execution.",
+  "author": "Adrian C Shum <adrian@cshum.com>",
+  "scripts": {
+    "test": "standard && node test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:cshum/async-depth-first.git"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "sema": "^1.0.0"
+  },
+  "devDependencies": {
+    "standard": "^5.1.0",
+    "tape": "^3.0.3"
+  }
+}
