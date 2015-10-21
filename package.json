@@ -1,6 +1,6 @@
 {
   "name": "async-depth-first",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Depth first traversal for recursive async execution.",
   "author": "Adrian C Shum <adrian@cshum.com>",
   "scripts": {

@@ -1,6 +1,7 @@
 var semaphore = require('sema')
 
 function Async () {
+  if (!(this instanceof Async)) return new Async()
   this._q = this._q || [semaphore(1)]
   this._error = null
 }
