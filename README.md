@@ -9,28 +9,30 @@ npm install async-depth-first
 ```
 
 ```js
-var a = async()
-a.defer(function (cb) {
+var depthFirst = require('async-depth-first')
+
+var q = depthFirst()
+q.defer(function (cb) {
   console.log('1')
-  a.defer(function (cb) {
+  q.defer(function (cb) {
     console.log('1.1')
-    a.defer(function (cb) {
+    q.defer(function (cb) {
       console.log('1.1.1')
       cb()
     })
     cb()
   })
-  a.defer(function (cb) {
+  q.defer(function (cb) {
     console.log('1.2')
     cb()
   })
   cb()
 })
-a.defer(function (cb) {
+q.defer(function (cb) {
   console.log('2')
   cb()
 })
-a.done(function (err) {
+q.done(function (err) {
   console.log('done')
 })
 
