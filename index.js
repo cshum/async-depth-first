@@ -12,12 +12,13 @@ Async.prototype.defer = function (fn) {
   sema.take(function () {
     // error block queue
     if (self._error) return sema.leave()
-    self._q.push(semaphore(1))
+    var nested = semaphore(1)
+    self._q.push(nested)
     fn(function (err) {
       if (err) self._error = err
-      var sema2 = self._q.pop()
-      sema2.take(function () {
-        sema2.leave()
+      nested.take(function () {
+        nested.leave()
+        self._q.pop()
         sema.leave()
       })
     })

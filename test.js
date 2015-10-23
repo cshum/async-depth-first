@@ -1,6 +1,10 @@
 var test = require('tape')
 var async = require('./')
 
+function timeout (fn) {
+  setTimeout(fn, Math.random() * 50)
+}
+
 test('depth first sequence', function (t) {
   var q = async()
   var seq = []
@@ -10,31 +14,31 @@ test('depth first sequence', function (t) {
       seq.push('1.1')
       q.defer(function (cb) {
         seq.push('1.1.1')
-        cb()
+        timeout(cb)
       })
-      cb()
+      timeout(cb)
     })
     q.defer(function (cb) {
       seq.push('1.2')
-      cb()
+      timeout(cb)
     })
-    cb()
+    timeout(cb)
   })
   q.defer(function (cb) {
     seq.push('2')
     q.defer(function (cb) {
       seq.push('2.1')
-      cb()
+      timeout(cb)
     })
     q.defer(function (cb) {
       seq.push('2.2')
-      cb()
+      timeout(cb)
     })
-    cb()
+    timeout(cb)
   })
   q.defer(function (cb) {
     seq.push('3')
-    cb()
+    timeout(cb)
   })
   q.done(function (err) {
     t.notOk(err)
@@ -54,15 +58,15 @@ test('error', function (t) {
       seq.push('1.1')
       q.defer(function (cb) {
         seq.push('1.1.1')
-        cb()
+        timeout(cb)
       })
-      cb()
+      timeout(cb)
     })
     q.defer(function (cb) {
       seq.push('1.2')
-      cb()
+      timeout(cb)
     })
-    cb()
+    timeout(cb)
   })
   q.defer(function (cb) {
     seq.push('2')
@@ -72,13 +76,13 @@ test('error', function (t) {
     })
     q.defer(function (cb) {
       seq.push('2.2')
-      cb()
+      timeout(cb)
     })
-    cb()
+    timeout(cb)
   })
   q.defer(function (cb) {
     seq.push('3')
-    cb()
+    timeout(cb)
   })
   q.done(function (err) {
     t.equal(err, 'boooom', 'error return')
