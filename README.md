@@ -1,6 +1,6 @@
 # async-depth-first
 
-Depth first traversal for recursive, asynchronous execution.
+Depth first traversal for recursive, asynchronous execution of JavaScript functions.
 
 [![Build Status](https://travis-ci.org/cshum/async-depth-first.svg?branch=master)](https://travis-ci.org/cshum/async-depth-first)
 
@@ -35,15 +35,17 @@ q.defer(function (cb) {
 q.done(function (err) {
   console.log('done')
 })
+```
 
-/* Outputs
+Outputs
+
+```js
 1
 1.1
 1.1.1
 1.2
 2
 done
-*/
 ```
 
 ## License
