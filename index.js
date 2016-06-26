@@ -2,38 +2,36 @@ var semaphore = require('sema')
 
 function Async () {
   if (!(this instanceof Async)) return new Async()
-  this._q = [semaphore(1)]
+  this._q = [semaphore()]
   this._error = null
 }
 
 Async.prototype.defer = function (fn) {
   var self = this
   var sema = this._q[this._q.length - 1]
-  sema.take(function () {
+  sema.acquire(function () {
     // error block queue
-    if (self._error) return sema.leave()
-    var nested = semaphore(1)
+    if (self._error) return sema.release()
+    var nested = semaphore()
     self._q.push(nested)
     fn(function (err) {
       if (err) self._error = err
-      nested.take(function () {
-        nested.leave()
+      nested.acquire(function () {
+        nested.release()
         self._q.pop()
-        sema.leave()
+        sema.release()
       })
     })
   })
-  return this
 }
 
 Async.prototype.done = function (fn) {
   var self = this
   var sema = this._q[0]
-  sema.take(function () {
+  sema.acquire(function () {
     fn(self._error)
-    sema.leave()
+    sema.release()
   })
-  return this
 }
 
 module.exports = Async

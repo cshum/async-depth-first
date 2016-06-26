@@ -12,10 +12,10 @@
   },
   "license": "MIT",
   "dependencies": {
-    "sema": "^1.0.0"
+    "sema": "^2.0.3"
   },
   "devDependencies": {
-    "standard": "^5.1.0",
-    "tape": "^3.0.3"
+    "standard": "^7.1.2",
+    "tape": "^4.6.0"
   }
 }
