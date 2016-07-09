@@ -1,6 +1,6 @@
 {
   "name": "async-depth-first",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Depth first traversal for recursive, asynchronous JavaScript functions.",
   "author": "Adrian C Shum <adrian@cshum.com>",
   "scripts": {
