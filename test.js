@@ -11,16 +11,22 @@ test('depth first sequence', function (t) {
   q.defer(function (cb) {
     seq.push('1')
     q.defer(function (cb) {
-      seq.push('1.1')
-      q.defer(function (cb) {
-        seq.push('1.1.1')
-        timeout(cb)
+      timeout(function () {
+        seq.push('1.1')
+        q.defer(function (cb) {
+          timeout(function () {
+            seq.push('1.1.1')
+            cb()
+          })
+        })
+        cb()
       })
-      timeout(cb)
     })
     q.defer(function (cb) {
-      seq.push('1.2')
-      timeout(cb)
+      timeout(function () {
+        seq.push('1.2')
+        cb()
+      })
     })
     timeout(cb)
   })
@@ -40,13 +46,15 @@ test('depth first sequence', function (t) {
     seq.push('3')
     timeout(cb)
   })
-  q.done(function (err) {
-    t.notOk(err)
-    t.deepEqual(seq, [
-      '1', '1.1', '1.1.1', '1.2', '2', '2.1', '2.2', '3'
-    ], 'depth first traversal')
-    t.end()
-  })
+  setTimeout(function () {
+    q.done(function (err) {
+      t.notOk(err)
+      t.deepEqual(seq, [
+        '1', '1.1', '1.1.1', '1.2', '2', '2.1', '2.2', '3'
+      ], 'depth first traversal')
+      t.end()
+    })
+  }, 1000)
 })
 
 test('error', function (t) {
@@ -55,12 +63,16 @@ test('error', function (t) {
   q.defer(function (cb) {
     seq.push('1')
     q.defer(function (cb) {
-      seq.push('1.1')
-      q.defer(function (cb) {
-        seq.push('1.1.1')
-        timeout(cb)
+      timeout(function () {
+        seq.push('1.1')
+        q.defer(function (cb) {
+          timeout(function () {
+            seq.push('1.1.1')
+            cb()
+          })
+        })
+        cb()
       })
-      timeout(cb)
     })
     q.defer(function (cb) {
       seq.push('1.2')
